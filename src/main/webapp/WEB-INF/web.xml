@@ -12,6 +12,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>HomeServlet</servlet-name>
     <servlet-class>HomeServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ItemsList</servlet-name>
+    <servlet-class>ItemsList</servlet-class>
+  </servlet>
+    <servlet>
+        <servlet-name>Item</servlet-name>
+        <servlet-class>Item</servlet-class>
+    </servlet>
 
   <servlet-mapping>
   <servlet-name>ServletDemo</servlet-name>
@@ -21,6 +29,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>HomeServlet</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ItemsList</servlet-name>
+    <url-pattern>/itemsList</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Item</servlet-name>
+        <url-pattern>/item</url-pattern>
+    </servlet-mapping>
 </web-app>
 
 
