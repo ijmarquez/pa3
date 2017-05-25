@@ -4,10 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-  <servlet>
-    <servlet-name>ServletDemo</servlet-name>
-    <servlet-class>ServletDemo</servlet-class>
-  </servlet>
+  //Servlet
   <servlet>
     <servlet-name>HomeServlet</servlet-name>
     <servlet-class>HomeServlet</servlet-class>
@@ -16,15 +13,24 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>ItemsList</servlet-name>
     <servlet-class>ItemsList</servlet-class>
   </servlet>
-    <servlet>
-        <servlet-name>Item</servlet-name>
-        <servlet-class>Item</servlet-class>
-    </servlet>
+  <servlet>
+      <servlet-name>Item</servlet-name>
+      <servlet-class>Item</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ShoppingCart</servlet-name>
+    <servlet-class>ShoppingCart</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BuyItem</servlet-name>
+    <servlet-class>BuyItem</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>OrderComplete</servlet-name>
+    <servlet-class>OrderComplete</servlet-class>
+  </servlet>
 
-  <servlet-mapping>
-  <servlet-name>ServletDemo</servlet-name>
-  <url-pattern>/demo</url-pattern>
-  </servlet-mapping>
+  //Servlet Mapping
   <servlet-mapping>
     <servlet-name>HomeServlet</servlet-name>
     <url-pattern>/home</url-pattern>
@@ -33,10 +39,23 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>ItemsList</servlet-name>
     <url-pattern>/itemsList</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Item</servlet-name>
-        <url-pattern>/item</url-pattern>
-    </servlet-mapping>
+  <servlet-mapping>
+      <servlet-name>Item</servlet-name>
+      <url-pattern>/item</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ShoppingCart</servlet-name>
+    <url-pattern>/ShoppingCart</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BuyItem</servlet-name>
+    <url-pattern>/BuyItem</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>OrderComplete</servlet-name>
+    <url-pattern>/OrderComplete</url-pattern>
+  </servlet-mapping>
+
 </web-app>
 
 
