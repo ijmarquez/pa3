@@ -1,16 +1,27 @@
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
+
+import static java.lang.Class.forName;
 
 /**
  * Created by walki on 5/24/2017.
  */
 public class ItemsList extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException
+            throws ServletException, IOException
     {
+        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        final String DB_URL = "jdbc:mysql://sylvester-mccoy-v3-ics.uci.edu/inf124-db-063";
+        final String DB_USER = "inf124-db-063";
+        final String DB_PASS = "GSaxgpMPZKhN";
+
+
         PrintWriter out = response.getWriter();
         //header
         out.println("<!DOCTYPE html>");
@@ -51,7 +62,57 @@ public class ItemsList extends HttpServlet {
         out.println("</div>");
 
         //body]
-        out.println("<p> this is where it'll show the list of different items </p>");
+        Connection conn = null;
+        Statement stmt = null;
+        try
+        {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            stmt = conn.createStatement();
+            String sql = "SELECT cost, generalName, imageLocation FROM MainProduct";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next())
+            {
+                    String generalName = rs.getString("generalName");
+                    String product = rs.getString("product");
+                    //double cost = rs.getString("cost");
+                    out.println("GeneralName: " + generalName);
+                    out.println(" Product: " + product + "<br>");
+            }
+
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (SQLException se)
+        {
+            se.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (stmt != null)
+                    stmt.close();
+            }
+            catch (SQLException se2)
+            {
+                try
+                {
+                    if (conn != null)
+                        conn.close();
+                }
+                catch (SQLException se)
+                {
+                    se.printStackTrace();
+                }
+            }
+        }
+
+
+        //out.println("<p> this is where it'll show the list of different items </p>");
         out.println("<div class=\"items-container\">");
         out.println("<div class=\"items-contents\">");
         out.println("<table class=\"itemListTable\">");
