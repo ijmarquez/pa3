@@ -9,8 +9,19 @@ import java.sql.*;
  * Created by walki on 5/24/2017.
  */
 public class Item extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
-    {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //connect to the DB information
+        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        final String DB_URL = Constants.getDatabaseName();
+        final String DB_USER = Constants.getUsername();
+        final String DB_PASS = Constants.getPassword();
+        Connection conn = null;
+        Statement stmt = null;
+
+        final String generalName =  request.getParameter("product").replaceAll("[']","");
+        final String productLocation = request.getParameter("image").replaceAll("[']","");
+
+
         PrintWriter out = response.getWriter();
         //header
         Constants.header(out);
@@ -19,17 +30,32 @@ public class Item extends HttpServlet {
         out.println("<div class=\"itemName\">");
         //insert selected item image and name
 
-//        try {
-//            Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection con = DriverManager.getConnection("jdbc:" + Constants.getDatabaseName(), Constants.getUsername(), Constants.getPassword());
-//            Statement stmt = con.createStatement();
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            stmt = conn.createStatement();
+            String sql = "SELECT `Display Name` FROM  MainProduct , Product WHERE MainProduct.generalName = \""+generalName+"\" && Product.Location = \"" + productLocation +"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                String itemName = rs.getString("Display Name");
+                out.println("itemName: " + itemName);
+                out.println("<h2>");
+                out.println(itemName);
+                out.println("</h2>");
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            out.println(e);
+        } catch (SQLException e) {
+            out.println(e);
+        }
+
+        out.println("<p> print image here " +productLocation+"</p>");
+        out.println("<div class=\"productContainer\"><img id=\"productContainerImg\" src=\"");
+        out.println(productLocation + "\">");
+
 //
-//            ResultSet resultSet = stmt.executeQuery("SELECT  `Display Name` FROM  `MainProduct` ,  `Product` WHERE MainProduct.generalName = \"$product\" && Product.Location =  \"$image\"");
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         //<?php
 //        require_once ('dbConnect.php');
 //        $product = $_GET['product'];

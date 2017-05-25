@@ -41,7 +41,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   </servlet-mapping>
   <servlet-mapping>
       <servlet-name>Item</servlet-name>
-      <url-pattern>/item</url-pattern>
+      <url-pattern>/Item</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ShoppingCart</servlet-name>

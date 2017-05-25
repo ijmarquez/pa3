@@ -15,10 +15,11 @@ public class ItemsList extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException
     {
+        //connect to the DB information
         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        final String DB_URL = "jdbc:mysql://sylvester-mccoy-v3.ics.uci.edu/inf124-db-063";
-        final String DB_USER = "inf124-db-063";
-        final String DB_PASS = "GSaxgpMPZKhN";
+        final String DB_URL = Constants.getDatabaseName();
+        final String DB_USER = Constants.getUsername();
+        final String DB_PASS = Constants.getPassword();
         Connection conn = null;
         Statement stmt = null;
 
@@ -26,25 +27,60 @@ public class ItemsList extends HttpServlet {
         //header
         Constants.header(out);
 
+        //out.println("<p> this is where it'll show the list of different items </p>");
+        out.println("<div class=\"items-container\">");
+        out.println("<div class=\"items-contents\">");
+        out.println("<table class=\"itemListTable\">");
+
+        //insert each item in a loop here
         try
         {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
-//            stmt = conn.createStatement();
-//            String sql = "SELECT * FROM MainProduct";
-//            ResultSet rs = stmt.executeQuery(sql);
-//            while (rs.next())
-//            {
-//                out.println("<div>");
-//                String generalName = rs.getString("generalName");
-//                String imageLocation = rs.getString("imageLocation");
-//                String cost = rs.getString("cost");
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM MainProduct";
+            ResultSet rs = stmt.executeQuery(sql);
+            int i = 1;
+            while (rs.next())
+            {
+                if ( i == 1) {
+                    out.println("<tr>");
+                }
+                if(i == 5) {
+                    out.println("</tr>");
+                    i = 1;
+                }
+                out.println("<td>");
+
+                String generalName = rs.getString("generalName");
+                String imageLocation = rs.getString("imageLocation");
+                String cost = rs.getString("cost");
+
+                out.println("<div class='image_thumbnail_holder'>");
+                out.println("<a href=\"Item?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
+                out.println("<img class=\"image_thumbnail\" src= \""+ imageLocation +"\" alt= \""+ generalName+"\">");
+                out.println("</a></div>");
+
+                //display item name
+                out.println("<div class='items-name'><p>");
+                out.println(generalName);
+                out.println("</p></div>");
+
+                //displayy item prices
+                out.println("<div class='items-price'><p>");
+                out.println(cost);
+                out.println("</p></div>");
+
+                //end of column
+                out.println("</td>");
+                i++;
+
 //                out.println("<p> GeneralName: " + generalName + "</p>");
 //                out.println("<p> imageLocation: " + imageLocation + "</p>");
 //                out.println("<p> Cost: " + cost + "</p>");
 //                out.println("</div>");
-//            }
+            }
         }
         catch (ClassNotFoundException e)
         {
@@ -53,7 +89,7 @@ public class ItemsList extends HttpServlet {
         }
         catch (SQLException se)
         {
-            out.println("<p> " + se.getMessage() );
+            out.println(se);
             se.printStackTrace();
         }
         finally
@@ -76,26 +112,6 @@ public class ItemsList extends HttpServlet {
                 }
             }
         }
-
-
-        //out.println("<p> this is where it'll show the list of different items </p>");
-        out.println("<div class=\"items-container\">");
-        out.println("<div class=\"items-contents\">");
-        out.println("<table class=\"itemListTable\">");
-        //insert each item in a loop here
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
         out.println("</table>");
         out.println("</div>");
         out.println("</div>");
@@ -141,4 +157,3 @@ public class ItemsList extends HttpServlet {
 //        echo"</td> \n";
 //        $i++;
 //        };
-//        include('dbClose.php');

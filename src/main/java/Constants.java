@@ -19,7 +19,7 @@ public class Constants {
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/buyItem.css\">");
         out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/customerOrder.css\">");
         out.println("<script type=\"text/javascript\" src=\"js/buyItem.js\"></script>");
-        out.println("<script type=\"text/javascript\" src=\"js/Item.js\"></script>");
+        out.println("<script type=\"text/javascript\" src=\"js/item.js\"></script>");
         out.println("<link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css\">");
         out.println("<script src=\"//code.jquery.com/jquery-1.10.2.js\"></script>");
         out.println("<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js\"></script>");
@@ -58,7 +58,7 @@ public class Constants {
     }
 
     public static String getDatabaseName() {
-        return "sylvester-mccoy-v3.ics.uci.edu/inf124-db-063";
+        return "jdbc:mysql://sylvester-mccoy-v3.ics.uci.edu/inf124-db-063";
     }
 
     public static String getUsername() {
