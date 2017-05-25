@@ -3,6 +3,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 
 /**
  * Created by walki on 5/24/2017.
@@ -18,6 +19,17 @@ public class Item extends HttpServlet {
         out.println("<div class=\"itemName\">");
         //insert selected item image and name
 
+//        try {
+//            Class.forName("oracle.jdbc.driver.OracleDriver");
+//            Connection con = DriverManager.getConnection("jdbc:" + Constants.getDatabaseName(), Constants.getUsername(), Constants.getPassword());
+//            Statement stmt = con.createStatement();
+//
+//            ResultSet resultSet = stmt.executeQuery("SELECT  `Display Name` FROM  `MainProduct` ,  `Product` WHERE MainProduct.generalName = \"$product\" && Product.Location =  \"$image\"");
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         //<?php
 //        require_once ('dbConnect.php');
 //        $product = $_GET['product'];

@@ -56,7 +56,20 @@ public class Constants {
         out.println("</body>");
         out.println("</html>");
     }
+
+    public static String getDatabaseName() {
+        return "sylvester-mccoy-v3.ics.uci.edu";
+    }
+
+    public static String getUsername() {
+        return "inf124-db-063";
+    }
+
+    public static String getPassword() {
+        return "GSaxgpMPZKhN";
+    }
 }
+
 
 //out.println("");
 //        out.println("");
