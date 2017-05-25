@@ -1,16 +1,11 @@
-import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class ServletDemo extends HttpServlet {
+/**
+ * Created by Calvin on 5/24/2017.
+ */
+public class Constants {
 
-public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws IOException
-    {
-        PrintWriter out = response.getWriter();
-        //header
+    public static void header(PrintWriter out) {
         out.println("<!DOCTYPE html>");
         out.println("<html lang=\"en\">");
         out.println("<head>");
@@ -43,34 +38,14 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
         out.println("</div>");
         out.println("<div class=\"navMenu\">");
         out.println("<ul class=\"navBar\">");
-        out.println("<li>  <a class=\"userOption\" href=\"home\"> Home </a> </li>");
+        out.println("<li> <a class=\"userOption\" href=\"home\"> Home </a> </li>");
+        out.println("<li> <a class=\"userOption\" href=\"ShoppingCart\"> Shopping Cart </a> </li>");
         out.println("</ul>");
         out.println("</div>");
         out.println("</div>");
+    }
 
-        //body]
-        out.println("<p> this is where it'll show the list of different items </p>");
-        out.println("<div class=\"items-container\">");
-        out.println("<div class=\"items-contents\">");
-        out.println("<table class=\"itemListTable\">");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("</table>");
-        out.println("</div>");
-        out.println("</div>");
-
-        //footer
+    public static void footer(PrintWriter out) {
         out.println("<footer>");
         out.println("<div class=\"footer\">");
         out.println("<a class=\"footerOption\" href=\"about.php\">about us</a>");
@@ -83,3 +58,22 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
     }
 }
 
+//out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
+//        out.println("");
