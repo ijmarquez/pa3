@@ -3,6 +3,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 
 /**
  * Created by walki on 5/24/2017.
@@ -15,8 +16,12 @@ public class ItemsList extends HttpServlet {
         //header
         Constants.header(out);
 
-        //body]
         Connection conn = null;
+        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        final String DB_URL = "jdbc:mysql://sylvester-mccoy-v3-ics.uci.edu/inf124-db-063";
+        final String DB_USER = "inf124-db-063";
+        final String DB_PASS = "GSaxgpMPZKhN";
+
         Statement stmt = null;
         try
         {
