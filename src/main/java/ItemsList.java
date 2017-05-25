@@ -1,3 +1,4 @@
+import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -5,48 +6,54 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 
+
 /**
  * Created by walki on 5/24/2017.
  */
+@WebServlet("/ItemsList")
 public class ItemsList extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException
     {
+        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        final String DB_URL = "jdbc:mysql://sylvester-mccoy-v3.ics.uci.edu/inf124-db-063";
+        final String DB_USER = "inf124-db-063";
+        final String DB_PASS = "GSaxgpMPZKhN";
+        Connection conn = null;
+        Statement stmt = null;
+
         PrintWriter out = response.getWriter();
         //header
         Constants.header(out);
 
-        Connection conn = null;
-        final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        final String DB_URL = "jdbc:mysql://sylvester-mccoy-v3-ics.uci.edu/inf124-db-063";
-        final String DB_USER = "inf124-db-063";
-        final String DB_PASS = "GSaxgpMPZKhN";
-
-        Statement stmt = null;
         try
         {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
-            stmt = conn.createStatement();
-            String sql = "SELECT cost, generalName, imageLocation FROM MainProduct";
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next())
-            {
-                    String generalName = rs.getString("generalName");
-                    String product = rs.getString("product");
-                    //double cost = rs.getString("cost");
-                    out.println("GeneralName: " + generalName);
-                    out.println(" Product: " + product + "<br>");
-            }
-
+//            stmt = conn.createStatement();
+//            String sql = "SELECT * FROM MainProduct";
+//            ResultSet rs = stmt.executeQuery(sql);
+//            while (rs.next())
+//            {
+//                out.println("<div>");
+//                String generalName = rs.getString("generalName");
+//                String imageLocation = rs.getString("imageLocation");
+//                String cost = rs.getString("cost");
+//                out.println("<p> GeneralName: " + generalName + "</p>");
+//                out.println("<p> imageLocation: " + imageLocation + "</p>");
+//                out.println("<p> Cost: " + cost + "</p>");
+//                out.println("</div>");
+//            }
         }
         catch (ClassNotFoundException e)
         {
+            out.println("<p> CLASS NOT FOUND </p>");
             e.printStackTrace();
         }
         catch (SQLException se)
         {
+            out.println("<p> " + se.getMessage() );
             se.printStackTrace();
         }
         finally

@@ -58,7 +58,7 @@ public class Constants {
     }
 
     public static String getDatabaseName() {
-        return "sylvester-mccoy-v3.ics.uci.edu";
+        return "sylvester-mccoy-v3.ics.uci.edu/inf124-db-063";
     }
 
     public static String getUsername() {
