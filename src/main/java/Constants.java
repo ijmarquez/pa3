@@ -65,9 +65,7 @@ public class Constants {
         return "inf124-db-063";
     }
 
-    public static String getPassword() {
-        return "GSaxgpMPZKhN";
-    }
+    public static String getPassword() { return "GSaxgpMPZKhN"; }
 }
 
 

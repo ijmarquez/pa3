@@ -18,6 +18,7 @@ public class Item extends HttpServlet {
         Connection conn = null;
         Statement stmt = null;
 
+        response.setContentType("text/html; charset=UTF-8");
         char temp [] = request.getParameter("product").toCharArray();
         char copy [] = new char[temp.length-2];
         for(int i = 0; i < temp.length - 2;++i) {
@@ -26,7 +27,7 @@ public class Item extends HttpServlet {
 
         final String generalName = String.valueOf(copy);
         final String productLocation = request.getParameter("image").replaceAll("[']","");
-
+        String itemName = "";
 
         PrintWriter out = response.getWriter();
         //header
@@ -45,13 +46,11 @@ public class Item extends HttpServlet {
 //            String sql = "SELECT `Display Name` FROM  MainProduct , Product WHERE MainProduct.generalName = \""+generalName+"\" && Product.Location = \"" + productLocation +"\"";
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
-                String itemName = rs.getString("Display Name");
+                itemName = rs.getString("Display Name");
                 out.println("<h2>");
                 out.println(itemName);
                 out.println("</h2>");
             }
-
-            conn = null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             out.println(e);
@@ -72,39 +71,24 @@ public class Item extends HttpServlet {
         out.println("<ul class=\"boxList\">");
 
         try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-
             stmt = conn.createStatement();
-            String sql = "SELECT `Display Name` FROM  `MainProduct` ,  `Product` WHERE MainProduct.generalName =  \""+ generalName +"\" && Product.Location =  \""+productLocation+"\"";
-//            String sql = "SELECT `Display Name` FROM  MainProduct , Product WHERE MainProduct.generalName = \""+generalName+"\" && Product.Location = \"" + productLocation +"\"";
+            String sql = "SELECT  `Location`,  `Display Name`, `description`, `generalName` FROM  `Product`, `MainProduct`\n" +
+                    "WHERE MainProduct.generalName = \""+generalName+"\" && MainProduct.ID = Product.ID";
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) {
-                String itemName = rs.getString("Display Name");
-                out.println("<h2>");
-                out.println(itemName);
-                out.println("</h2>");
-            }
+            while (rs.next()) {
+                String DisplayName = rs.getString("Display Name");
+                String gName = rs.getString("generalName");
+                String imageLocation = rs.getString("Location");
 
-            conn = null;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            out.println(e);
-        } catch (SQLException e) {
+                out.println("<li class='itemList'>");
+                out.println("<a href=\"Item?product='"+gName+"'&amp;image='"+imageLocation+"'\">");
+                out.println("<img class=\"itemImg\" src= \""+ imageLocation +"\" alt= \""+ generalName+"\">");
+                out.println("</a></li>");
+            }
+        }catch (SQLException e) {
             out.println(e);
         }
-        //show differnt color clothes
-        //<?php
-//        $stmt = $conn-> query("SELECT  `Location` ,  `Display Name` ,  `description`, `generalName` FROM  `Product` ,  `MainProduct`
-//        WHERE MainProduct.generalName =  \"$product\" && MainProduct.ID = Product.ID");
-//        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//        echo('<li class="itemList"> ');
-//        echo('<a class="items" href="item.php?product='.$row['generalName'].'&amp;image='.$row['Location'].'">');
-//        echo('<img class="itemImg" src="'.$row['Location'].'">');
-//        echo('</a></li>');
-//        }
-//
-//        ?>
+
         out.println("</ul>");
         out.println("</div>");
         out.println("</li>");
@@ -137,50 +121,73 @@ public class Item extends HttpServlet {
         out.println("</ul>");
         out.println("</li>");
         out.println("</ul>");
+
+
         out.println("<div id=\"btnContainer\">");
-
         //get item price
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT `cost` FROM `MainProduct` , `Product`\n" +
+                    "WHERE Product.`Display Name` =  \"" +itemName+"\" && Product.productID = MainProduct.product";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
 
-        //<?php
-//        $btnQuery = $conn->query("SELECT  `cost` FROM  `MainProduct` ,  `Product`
-//        WHERE Product.`Display Name` =  \"$itemName\" && Product.productID = MainProduct.product");
-//        $showCost = $btnQuery->fetchColumn(0);
-//
-//        //show cost
-//        echo('<p id="cost">$');
-//        echo($showCost);
-//        echo('</p>');
-//
-//        //submit button
-//        echo('<input id="btn" type="button" value="BUY NOW" onclick="buyItem(\''.$image.'\', \''.$itemName.'\')"/>');
-//        ?>
+                String showCost = rs.getString("cost");
 
+                out.println("<p id='cost'> $");
+                out.println(showCost);
+                out.println("</p>");
+            }
+        }catch (SQLException e) {
+            out.println(e);
+        }
+        out.print("<form action='ShoppingCart' method='post'>");
+        out.println("Quantity: <input id='quantity' type='text' name=\"quantity\" size='3' value=1> <br><br>"); //onkeyup="updateTotal()"
+        out.println("<input id = 'item' type='text' name='itemName' value=\""+itemName+"\" hidden>");
+        //submit button
+        out.println("<input id=\"btn\" type=\"button\" value=\"Add to cart\" name=\"addButton\"onclick=\"addToCart('"+productLocation+"', '"+itemName+"')\"/>");
+        out.println("</form>");
         out.println("</div>");
         out.println("</div>");
         out.println("<div class=\"descriptionContainer\">");
         out.println("<h3 id=\"descriptionHeader\"> Description</h3>");
 
         //get description for the server and put it here
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT  `description` FROM  `MainProduct` ,  `Product`\n" +
+                    "WHERE Product.`Display Name` =  \""+itemName +"\" && Product.productID = MainProduct.product";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String showDescription = rs.getString("description");
+                out.println("<p>");
+                out.println(showDescription);
+                out.println("</p>");
+            }
+        }catch (SQLException e) {
+            out.println(e);
+        }
 
-        //<?php
-//        $descriptionQuery = $conn->query("SELECT  `description` FROM  `MainProduct` ,  `Product`
-//        WHERE Product.`Display Name` =  \"$itemName\" && Product.productID = MainProduct.product");
-//        $showDescription = $descriptionQuery->fetchColumn(0);
-//        echo('<p>');
-//        echo($showDescription);
-//        echo('</p>');
-//        ?>
-
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
-        out.println("");
+        finally
+        {
+            try
+            {
+                if (stmt != null)
+                    stmt.close();
+            }
+            catch (SQLException se2)
+            {
+                try
+                {
+                    if (conn != null)
+                        conn.close();
+                }
+                catch (SQLException se)
+                {
+                    se.printStackTrace();
+                }
+            }
+        }
         out.println("</div>");
 
         //footer
