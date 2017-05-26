@@ -18,7 +18,13 @@ public class Item extends HttpServlet {
         Connection conn = null;
         Statement stmt = null;
 
-        final String generalName =  request.getParameter("product").replaceAll("[']","");
+        char temp [] = request.getParameter("product").toCharArray();
+        char copy [] = new char[temp.length-2];
+        for(int i = 0; i < temp.length - 2;++i) {
+            copy[i] = temp[i+1];
+        }
+
+        final String generalName = String.valueOf(copy);
         final String productLocation = request.getParameter("image").replaceAll("[']","");
 
 
@@ -35,15 +41,17 @@ public class Item extends HttpServlet {
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
             stmt = conn.createStatement();
-            String sql = "SELECT `Display Name` FROM  MainProduct , Product WHERE MainProduct.generalName = \""+generalName+"\" && Product.Location = \"" + productLocation +"\"";
+            String sql = "SELECT `Display Name` FROM  `MainProduct` ,  `Product` WHERE MainProduct.generalName =  \""+ generalName +"\" && Product.Location =  \""+productLocation+"\"";
+//            String sql = "SELECT `Display Name` FROM  MainProduct , Product WHERE MainProduct.generalName = \""+generalName+"\" && Product.Location = \"" + productLocation +"\"";
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 String itemName = rs.getString("Display Name");
-                out.println("itemName: " + itemName);
                 out.println("<h2>");
                 out.println(itemName);
                 out.println("</h2>");
             }
+
+            conn = null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             out.println(e);
@@ -51,31 +59,8 @@ public class Item extends HttpServlet {
             out.println(e);
         }
 
-        out.println("<p> print image here " +productLocation+"</p>");
         out.println("<div class=\"productContainer\"><img id=\"productContainerImg\" src=\"");
         out.println(productLocation + "\">");
-
-//
-        //<?php
-//        require_once ('dbConnect.php');
-//        $product = $_GET['product'];
-//        $image = $_GET['image'];
-//        $displayName = $conn->query("SELECT  `Display Name` FROM  `MainProduct` ,  `Product`
-//        WHERE MainProduct.generalName =  \"$product\" && Product.Location =  \"$image\"");
-//        $itemName = $displayName->fetchColumn(0);
-//
-//        //display item name
-//        echo("<h2>");
-//        echo($itemName);
-//        echo("</h2>");
-//
-//        //display item image
-//        echo('<div class="productContainer"><img id="productContainerImg" src=\'');
-//        echo($image);
-//        echo("'>");
-//
-//        ?>
-
         out.println("</div>");
 
         out.println("<ul class=\"itemCategories\">");
@@ -86,6 +71,28 @@ public class Item extends HttpServlet {
         out.println("<div class=\"list\">");
         out.println("<ul class=\"boxList\">");
 
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            stmt = conn.createStatement();
+            String sql = "SELECT `Display Name` FROM  `MainProduct` ,  `Product` WHERE MainProduct.generalName =  \""+ generalName +"\" && Product.Location =  \""+productLocation+"\"";
+//            String sql = "SELECT `Display Name` FROM  MainProduct , Product WHERE MainProduct.generalName = \""+generalName+"\" && Product.Location = \"" + productLocation +"\"";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                String itemName = rs.getString("Display Name");
+                out.println("<h2>");
+                out.println(itemName);
+                out.println("</h2>");
+            }
+
+            conn = null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            out.println(e);
+        } catch (SQLException e) {
+            out.println(e);
+        }
         //show differnt color clothes
         //<?php
 //        $stmt = $conn-> query("SELECT  `Location` ,  `Display Name` ,  `description`, `generalName` FROM  `Product` ,  `MainProduct`
