@@ -8,31 +8,26 @@ import java.io.PrintWriter;
  * Created by Calvin on 5/24/2017.
  */
 public class BuyItem extends HttpServlet {
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+
         //header
         Constants.header(out);
 
         //body]
-        out.println("<body onload=\"getValues()\">");
+//        out.println("<body onload=\"getValues()\">");
         out.println("<div class=\"form\">");
         out.println("<form method=\"post\" action=\"index.php?page=insertCustomerInfo\" name=\"userInfo\" onsubmit=\"checkForm()\">");
         out.println("<div class=\"itemSelected\">");
-        out.println("<div>");
-        out.println("<p>Item Purchase:</p>");
-        out.println("<input id=\"itemPicked\" name=\"itemPurchase\" class=\"inputReadOnly\" readonly> </input>");
-        out.println("</div>");
-        out.println("<img id=\"showImg\">");
-        out.println("<div>");
-        out.println("<p>Size: <input id=\"sizePicked\" name=\"itemSize\" class=\"inputReadOnly\" size=\"7\"readonly> </input> </p>");
-        out.println("</div>");
+        out.println("<h1> Customer Information </h1>");
         out.println("</div>");
         out.println("<table class=\"buyItemTableContainer\">");
         out.println("<h2 class=\"formSep\">Personal Information</h2>");
         out.println("<tr>");
         out.println("<td>First Name:</td>");
         out.println("<td><input type=\"text\" name=\"firstName\"></td>");
-        out.println("</tr?");
+        out.println("</tr>");
         out.println("<tr>");
         out.println("<td>Last Name:</td>");
         out.println("<td><input type=\"text\" name=\"lastName\"></td>");

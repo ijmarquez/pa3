@@ -32,7 +32,21 @@ function buyItem(img, shirt) {
         localStorage.setItem('size', idPicked.title);
         localStorage.setItem('img', img);
         localStorage.setItem('cost', "10");
-        window.location.assign("buyItem.php");
-        window.location.href = "index.php?page=buyItem";
+        window.location.assign("BuyItem");
+        window.location.href = "BuyItem?page=BuyItem";
+    }
+}
+
+function addToCart(img, shirt) {
+    if(idPicked==undefined)
+        alert("Pick a shirt size");
+    else {
+       var qty = Number(document.getElementById("quantity").value);
+        // localStorage.setItem('item', shirt);
+        // localStorage.setItem('size', idPicked.title);
+        // localStorage.setItem('img', img);
+        // localStorage.setItem('cost', "10");
+        window.location.assign("ShoppingCart");
+        window.location.href = "ShoppingCart?item="+shirt+"&quantity="+ qty;
     }
 }
