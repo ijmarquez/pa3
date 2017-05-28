@@ -58,8 +58,9 @@ public class ItemsList extends HttpServlet {
                 String cost = rs.getString("cost");
 
                 out.println("<div class='image_thumbnail_holder'>");
-                out.println("<a href=\"Item?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
-                out.println("<img class=\"image_thumbnail\" src= \""+ imageLocation +"\" alt= \""+ generalName+"\">");
+                //out.println("<a href=\"Item?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
+                out.println("<a href=\"PreviousItemsViewed?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
+                out.println("<img class=\"image_thumbnail\" src= \""+ imageLocation +"\" alt= \""+ generalName+"\" onclick=\"ItemService\">");
                 out.println("</a></div>");
 
                 //display item name
@@ -67,7 +68,7 @@ public class ItemsList extends HttpServlet {
                 out.println(generalName);
                 out.println("</p></div>");
 
-                //displayy item prices
+                //display item prices
                 out.println("<div class='items-price'><p>");
                 out.println(cost);
                 out.println("</p></div>");
@@ -114,6 +115,18 @@ public class ItemsList extends HttpServlet {
         }
         out.println("</table>");
         out.println("</div>");
+
+        // Previously-viewed items
+        out.println("<hr>");
+
+        out.println("<div class='items-viewed-container'>");
+        out.println("<p>Items viewed:</p>");
+        out.println("<div class='items-viewed'>");
+
+        //out.println("<a href=\"PreviousItemsViewed?product='"+generalName + "'&amp;image='" +imageLocation + "'\">");
+
+        out.println("</div>"); // items-viewed
+        out.println("</div>"); // items-viewed-container
         out.println("</div>");
 
         //footer
