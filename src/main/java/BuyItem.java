@@ -8,8 +8,10 @@ import java.io.PrintWriter;
  * Created by Calvin on 5/24/2017.
  */
 public class BuyItem extends HttpServlet {
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+
         //header
         Constants.header(out);
 

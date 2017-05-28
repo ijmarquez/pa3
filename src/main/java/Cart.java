@@ -1,15 +1,16 @@
+import java.util.HashMap;
+
 /**
  * Created by Calvin on 5/26/2017.
  */
 public class Cart {
 
-    private String name;
-    private String quantity;
-    private String cost;
+    HashMap<String,Integer> cart = new HashMap<String, Integer>();
+    public Cart() { }
 
-    public Cart(String name, String quantity, String cost) {
-        this.name = name;
-        this.quantity = quantity;
-        this.cost = cost;
+    public Cart(String name, Integer quantity) {
+        cart.put(name, quantity);
     }
+
+    public HashMap getCart() { return cart; }
 }

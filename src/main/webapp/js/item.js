@@ -41,12 +41,12 @@ function addToCart(img, shirt) {
     if(idPicked==undefined)
         alert("Pick a shirt size");
     else {
-        // alert("Quantity = " + Number(document.getElementById("quantity").value));
+       var qty = Number(document.getElementById("quantity").value);
         // localStorage.setItem('item', shirt);
         // localStorage.setItem('size', idPicked.title);
         // localStorage.setItem('img', img);
         // localStorage.setItem('cost', "10");
-        // window.location.assign("BuyItem");
-        // window.location.href = "BuyItem?page=BuyItem";
+        window.location.assign("ShoppingCart");
+        window.location.href = "ShoppingCart?item="+shirt+"&quantity="+ qty;
     }
 }

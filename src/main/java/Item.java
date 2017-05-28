@@ -1,6 +1,7 @@
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -147,6 +148,20 @@ public class Item extends HttpServlet {
         //submit button
         out.println("<input id=\"btn\" type=\"button\" value=\"Add to cart\" name=\"addButton\"onclick=\"addToCart('"+productLocation+"', '"+itemName+"')\"/>");
         out.println("</form>");
+
+        String quantity = request.getParameter("quantity");
+        String item = request.getParameter("itemName");
+        String button = request.getParameter("addButton");
+        HttpSession s;
+        if(button != null) {
+            s = request.getSession(true);
+            s.setAttribute(item, quantity);
+            out.println("<p> ADD PRESSED </p>");
+//            Cookie cookie = new Cookie(item, quantity);
+//            response.addCookie(cookie);
+//            response.sendRedirect("ShoppingCart");
+        }
+
         out.println("</div>");
         out.println("</div>");
         out.println("<div class=\"descriptionContainer\">");
