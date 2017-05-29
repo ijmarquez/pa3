@@ -22,17 +22,22 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-class>ShoppingCart</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>BuyItem</servlet-name>
-    <servlet-class>BuyItem</servlet-class>
+    <servlet-name>CheckOut</servlet-name>
+    <servlet-class>CheckOut</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>OrderComplete</servlet-name>
-    <servlet-class>OrderComplete</servlet-class>
+    <servlet-name>OrderDetails</servlet-name>
+    <servlet-class>OrderDetails</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>PreviousItemsViewed</servlet-name>
     <servlet-class>PreviousItemsViewed</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>StoreOrderInDB</servlet-name>
+    <servlet-class>StoreOrderInDB</servlet-class>
+  </servlet>
+
 
 
   //Servlet Mapping
@@ -53,18 +58,21 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <url-pattern>/ShoppingCart</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>BuyItem</servlet-name>
-    <url-pattern>/BuyItem</url-pattern>
+    <servlet-name>CheckOut</servlet-name>
+    <url-pattern>/CheckOut</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>OrderComplete</servlet-name>
-    <url-pattern>/OrderComplete</url-pattern>
+    <servlet-name>OrderDetails</servlet-name>
+    <url-pattern>/OrderDetails</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>PreviousItemsViewed</servlet-name>
     <url-pattern>/PreviousItemsViewed</url-pattern>
   </servlet-mapping>
-
+  <servlet-mapping>
+    <servlet-name>StoreOrderInDB</servlet-name>
+    <url-pattern>/StoreOrderInDB</url-pattern>
+  </servlet-mapping>
 
 </web-app>
 
