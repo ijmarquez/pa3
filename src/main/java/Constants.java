@@ -38,7 +38,8 @@ public class Constants {
         out.println("</div>");
         out.println("<div class=\"navMenu\">");
         out.println("<ul class=\"navBar\">");
-        out.println("<li> <a class=\"userOption\" href=\"home\"> Home </a> </li>");
+        out.println("<li> <a class=\"userOption\" href=\"home\"> Welcome </a> </li>");
+        out.println("<li> <a class=\"userOption\" href=\"itemsList\"> Home </a> </li>");
         out.println("<li> <a class=\"userOption\" href=\"ShoppingCart\"> Shopping Cart </a> </li>");
         out.println("</ul>");
         out.println("</div>");
