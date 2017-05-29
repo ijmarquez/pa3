@@ -30,7 +30,7 @@ public class Item extends HttpServlet {
 
         final String generalName = String.valueOf(copy);
         final String productLocation = request.getParameter("image").replaceAll("[']","");
-        String itemName = "";
+        String itemName = "", gName = "";
 
         PrintWriter out = response.getWriter();
         //header
@@ -80,7 +80,7 @@ public class Item extends HttpServlet {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String DisplayName = rs.getString("Display Name");
-                String gName = rs.getString("generalName");
+                gName = rs.getString("generalName");
                 String imageLocation = rs.getString("Location");
 
                 out.println("<li class='itemList'>");
@@ -207,50 +207,45 @@ public class Item extends HttpServlet {
         //footer
         Constants.footer(out);
 
-
-
-        //store values from request
-        //String generalName = request.getParameter("generalName");
-        //String imageLocation = request.getParameter("imageLocation");
-
         //create a list
         List<ItemModel> viewedList = new ArrayList<ItemModel>();
-        //viewedList.add(itemViewed);
 
         //access session
         HttpSession session = request.getSession();
         viewedList = (ArrayList)session.getAttribute("viewedList");
 
-        // if session doesn't have viewedList, add viewedList
-        // else, add to existing list AND if size > 5, remove first itemViewed
-        if (generalName != "" && generalName != null &&  productLocation != "" && productLocation != null)
-        {
-            //create an item object
-            ItemModel itemViewed = new ItemModel();
-            itemViewed.setGeneralName(generalName);
-            itemViewed.setImageLocation(productLocation);
+        if(viewedList == null) {
+            viewedList = new ArrayList<ItemModel>();
+        } else {
 
-            viewedList.add(itemViewed);
         }
-//        else
-//        {
-//            // fetch the old list,
-//            //List<ItemModel> viewedList2 = viewedList;
-//            // add itemViewed,
-//            viewedList2.add(itemViewed);
-//            // if size > 5, remove first itemViewed
-//
-//
-//
-//            // replace viewedList in session
-//            session.setAttribute("viewedList", viewedList2);
-//        }
+        // if session doesn't have viewedList, add viewedList
+        if (generalName != "" &&  productLocation != "" && productLocation != null && gName != "")
+        {
+            boolean isInList = false;
+
+            //check for duplicates
+            for(int i = 0; i < viewedList.size(); ++i) {
+                ItemModel tempItem = viewedList.get(i);
+                if(tempItem.getImageLocation().equalsIgnoreCase(productLocation))
+                    isInList = true;
+            }
+
+            //store when there is no duplicates
+            if(!isInList) {
+                //create an item object
+                ItemModel itemViewed = new ItemModel();
+                itemViewed.setGeneralName(generalName);
+                itemViewed.setImageLocation(productLocation);
+
+                viewedList.add(itemViewed);
+            }
+        }
+       //add to Session list AND if size > 5, remove first itemViewed
         if (viewedList.size() > 5) {
             viewedList.remove(0);
         }
         session.setAttribute("viewedList", viewedList);
-
-
     }
 }
 
