@@ -27,5 +27,6 @@ public class Cart {
     public String getName() { return name; }
     public String getSize() { return size; }
     public int getQty() { return qty; }
+    public int getTotalCost() {return totalCost; }
     public void setTotalCost (int totalCost) { this.totalCost = totalCost; }
 }

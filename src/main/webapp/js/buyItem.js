@@ -21,24 +21,17 @@ function getValues() {
 }
 
 function updateTotal() {
-    //quantity
-    var a = Number(document.getElementById("quantity").value);
-    var b = 10.00;
-    a.toFixed(2);
-    b.toFixed(2);
-    var c = a * b;
-    c = parseFloat(c);
-
-    //tax
-    var tax = document.getElementById("taxPicked").value;
-    tax = c * tax;
-    tax = parseFloat(tax);
-    tax = tax.toFixed(2);
-    document.getElementById("taxTotal").value = tax;
-    c += parseFloat(tax);
-
-    var total = 0;
-    total = c;
+    // //tax
+    // var c =  document.getElementById("totalCost").value;
+    // var tax = document.getElementById("taxPicked").value;
+    // tax = c * tax;
+    // tax = parseFloat(tax);
+    // tax = tax.toFixed(2);
+    // document.getElementById("taxTotal").value = tax;
+    // c += parseFloat(tax);
+    //
+    var total = document.getElementById("totalCost").value;
+    // total = c;
 
     //delivery
     var delivery = document.getElementById("deliveryType");
@@ -249,32 +242,32 @@ function sendEmail(check) {
     window.location.href = "mailto:panteater@uci.edu?subject=Order Place&body="+body;
 }
 
-function getZip(zip , city, state) {
-    if(zip.length == 5) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var result = xhr.responseText;
-                var place = result.split(', ');
-                if(city.id == "billCity") {
-                    document.getElementById("taxPicked").value = place[0];
-                    updateTotal();
-                }
-                document.getElementById(state.id).value = place[1];
-                document.getElementById(city.id).value = place[2];
-
-            }
-        }
-        xhr.open("GET", "zipCode.php?zip=" + zip, true);
-        xhr.send();
-    }
-}
-
-function getState(state) {
-    $(function() {
-        $( "#"+state ).autocomplete({
-            source: 'fillAddress.php',
-            minlength: 1
-        });
-    });
-}
+// function getZip(zip , city, state) {
+//     if(zip.length == 5) {
+//         var xhr = new XMLHttpRequest();
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState == 4 && xhr.status == 200) {
+//                 var result = xhr.responseText;
+//                 var place = result.split(', ');
+//                 if(city.id == "billCity") {
+//                     document.getElementById("taxPicked").value = place[0];
+//                     updateTotal();
+//                 }
+//                 document.getElementById(state.id).value = place[1];
+//                 document.getElementById(city.id).value = place[2];
+//
+//             }
+//         }
+//         xhr.open("GET", "zipCode.php?zip=" + zip, true);
+//         xhr.send();
+//     }
+// }
+//
+// function getState(state) {
+//     $(function() {
+//         $( "#"+state ).autocomplete({
+//             source: 'fillAddress.php',
+//             minlength: 1
+//         });
+//     });
+// }
