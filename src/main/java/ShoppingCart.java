@@ -10,7 +10,6 @@ import java.util.HashMap;
  * Created by Calvin on 5/24/2017.
  */
 public class ShoppingCart extends HttpServlet {
-    Cart shoppingCart;
     private ArrayList<Cart> itemList = new ArrayList<Cart>();
     private double totalCost = 0;
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -31,24 +30,17 @@ public class ShoppingCart extends HttpServlet {
         if(itemList == null) {
             itemList = new ArrayList<Cart>();
         }
-//        if(shoppingCart == null) {
-//            shoppingCart = new Cart();
-//            s.setAttribute("shoppingCart", shoppingCart);
-//        }
 
         //when qty or item has data
         if(qty != 0 && item != "" && size != "") {
             Cart currentItem = new Cart(item, qty, size);
-//            if(!itemList.contains(currentItem))
-                itemList.add(currentItem);
+            itemList.add(currentItem);
         }
 
         session.setAttribute("shoppingCart", itemList);
 
         PrintWriter out = response.getWriter();
-//        out.println("<p> item: " + item + "</p>");
-//        out.println("<p> size: " + size + "</p>");
-//        out.println("<p> qty: " + qty + "</p>");
+
         //header
         Constants.header(out);
 
@@ -69,37 +61,15 @@ public class ShoppingCart extends HttpServlet {
                 itemList.get(i).setTotalCost(total);
                 totalCost += total;
                 out.println("<tr>");
-//                out.println("<td>"+(i+1)+". </td>");
                 out.println("<td><p> "+(i+1)+". "+itemName+"</p></td>");
                 out.println("</tr>");
-//                out.println("<tr><td></td>");
                 out.println("<td><p>Size: "+itemSize+"</p> </td>");
                 out.println(" <td><p>Quantity: <input type=\"text\" name=\"quantity\" size=\"3\" value=\""+itemQty+"\" class=\"inputReadOnly\" readonly> </p></td>");
                 out.println("<td><p>Total Cost: $<input name=\"unitPrice\" value=\""+moneyFormat.format(total)+"\" class=\"inputReadOnly\" readonly> </input></p></td>");
                 out.println("</tr>");
             }
-
-//            for(String key : temp.keySet()) {
-//                int currQty = temp.get(key);
-//                out.println("<tr>");
-//                out.println("<td><p> "+key+"</p></td>");
-//                out.println("</tr>");
-//                out.println("<tr>");
-//                out.println("<td><p>Size: </p></td>");
-//                out.println(" <td><p>Quantity: <input type=\"text\" name=\"quantity\" size=\"3\" value=\""+currQty+"\" class=\"inputReadOnly\" readonly> </p></td>");
-//                total = currQty*10;
-//            }
         }
 
-
-//        out.println("<tr>");
-//        out.println("<td><p> item 1</p></td>");
-//        out.println("</tr>");
-//        out.println("<tr>");
-//        out.println("<td><p>Size: </p></td>");
-//        out.println(" <td><p>Quantity: <input type=\"text\" name=\"quantity\" size=\"3\" value=1 class=\"inputReadOnly\" readonly> </p></td>");
-//        out.println("<td><p>Cost: $<input name=\"unitPrice\" class=\"inputReadOnly\" readonly> </input></p></td>");
-//        out.println("</tr>");
         //end of each item
         out.println("</table>");
         out.println("</div>");

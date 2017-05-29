@@ -157,9 +157,6 @@ public class Item extends HttpServlet {
             s = request.getSession(true);
             s.setAttribute(item, quantity);
             out.println("<p> ADD PRESSED </p>");
-//            Cookie cookie = new Cookie(item, quantity);
-//            response.addCookie(cookie);
-//            response.sendRedirect("ShoppingCart");
         }
 
         out.println("</div>");
