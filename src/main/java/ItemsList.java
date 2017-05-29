@@ -1,3 +1,5 @@
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -5,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -13,7 +17,7 @@ import java.sql.*;
 @WebServlet("/ItemsList")
 public class ItemsList extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException
+            throws IOException, ServletException
     {
         //connect to the DB information
         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -24,10 +28,11 @@ public class ItemsList extends HttpServlet {
         Statement stmt = null;
 
         PrintWriter out = response.getWriter();
+
         //header
         Constants.header(out);
 
-        //out.println("<p> this is where it'll show the list of different items </p>");
+        //this is where it'll show the list of different items
         out.println("<div class=\"items-container\">");
         out.println("<div class=\"items-contents\">");
         out.println("<table class=\"itemListTable\">");
@@ -58,8 +63,7 @@ public class ItemsList extends HttpServlet {
                 String cost = rs.getString("cost");
 
                 out.println("<div class='image_thumbnail_holder'>");
-                //out.println("<a href=\"Item?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
-                out.println("<a href=\"PreviousItemsViewed?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
+                out.println("<a href=\"Item?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
                 out.println("<img class=\"image_thumbnail\" src= \""+ imageLocation +"\" alt= \""+ generalName+"\" onclick=\"ItemService\">");
                 out.println("</a></div>");
 
@@ -76,11 +80,6 @@ public class ItemsList extends HttpServlet {
                 //end of column
                 out.println("</td>");
                 i++;
-
-//                out.println("<p> GeneralName: " + generalName + "</p>");
-//                out.println("<p> imageLocation: " + imageLocation + "</p>");
-//                out.println("<p> Cost: " + cost + "</p>");
-//                out.println("</div>");
             }
         }
         catch (ClassNotFoundException e)
@@ -116,18 +115,11 @@ public class ItemsList extends HttpServlet {
         out.println("</table>");
         out.println("</div>");
 
-        // Previously-viewed items
         out.println("<hr>");
 
-        out.println("<div class='items-viewed-container'>");
-        out.println("<p>Items viewed:</p>");
-        out.println("<div class='items-viewed'>");
-
-        //out.println("<a href=\"PreviousItemsViewed?product='"+generalName + "'&amp;image='" +imageLocation + "'\">");
-
-        out.println("</div>"); // items-viewed
-        out.println("</div>"); // items-viewed-container
-        out.println("</div>");
+        // Previously-viewed items, param is the servlet name
+        RequestDispatcher rd = request.getRequestDispatcher("PreviousItemsViewed");
+        rd.include(request, response);
 
         //footer
         Constants.footer(out);

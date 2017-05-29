@@ -29,6 +29,11 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>OrderComplete</servlet-name>
     <servlet-class>OrderComplete</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>PreviousItemsViewed</servlet-name>
+    <servlet-class>PreviousItemsViewed</servlet-class>
+  </servlet>
+
 
   //Servlet Mapping
   <servlet-mapping>
@@ -55,6 +60,11 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>OrderComplete</servlet-name>
     <url-pattern>/OrderComplete</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PreviousItemsViewed</servlet-name>
+    <url-pattern>/PreviousItemsViewed</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>
 

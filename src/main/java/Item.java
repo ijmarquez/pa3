@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by walki on 5/24/2017.
@@ -204,6 +206,51 @@ public class Item extends HttpServlet {
 
         //footer
         Constants.footer(out);
+
+
+
+        //store values from request
+        //String generalName = request.getParameter("generalName");
+        //String imageLocation = request.getParameter("imageLocation");
+
+        //create a list
+        List<ItemModel> viewedList = new ArrayList<ItemModel>();
+        //viewedList.add(itemViewed);
+
+        //access session
+        HttpSession session = request.getSession();
+        viewedList = (ArrayList)session.getAttribute("viewedList");
+
+        // if session doesn't have viewedList, add viewedList
+        // else, add to existing list AND if size > 5, remove first itemViewed
+        if (generalName != "" && generalName != null &&  productLocation != "" && productLocation != null)
+        {
+            //create an item object
+            ItemModel itemViewed = new ItemModel();
+            itemViewed.setGeneralName(generalName);
+            itemViewed.setImageLocation(productLocation);
+
+            viewedList.add(itemViewed);
+        }
+//        else
+//        {
+//            // fetch the old list,
+//            //List<ItemModel> viewedList2 = viewedList;
+//            // add itemViewed,
+//            viewedList2.add(itemViewed);
+//            // if size > 5, remove first itemViewed
+//
+//
+//
+//            // replace viewedList in session
+//            session.setAttribute("viewedList", viewedList2);
+//        }
+        if (viewedList.size() > 5) {
+            viewedList.remove(0);
+        }
+        session.setAttribute("viewedList", viewedList);
+
+
     }
 }
 
