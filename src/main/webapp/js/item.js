@@ -38,15 +38,19 @@ function buyItem(img, shirt) {
 }
 
 function addToCart(img, shirt) {
-    if(idPicked==undefined)
+    var qty = Number(document.getElementById("quantity").value);
+
+    if(idPicked==undefined){
         alert("Pick a shirt size");
-    else {
-       var qty = Number(document.getElementById("quantity").value);
+    }else if (qty <= 0) {
+        alert("Invalid Quantity, must be at least 1.")
+    } else {
+        var size = idPicked.title;
         // localStorage.setItem('item', shirt);
         // localStorage.setItem('size', idPicked.title);
         // localStorage.setItem('img', img);
         // localStorage.setItem('cost', "10");
         window.location.assign("ShoppingCart");
-        window.location.href = "ShoppingCart?item="+shirt+"&quantity="+ qty;
+        window.location.href = "ShoppingCart?item="+shirt+"&quantity="+ qty+"&size="+size;
     }
 }
