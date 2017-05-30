@@ -31,6 +31,7 @@ function updateTotal() {
     // c += parseFloat(tax);
     //
     var total = document.getElementById("totalCost").value;
+
     // total = c;
 
     //delivery
@@ -46,6 +47,7 @@ function updateTotal() {
     else {
         total += 3;
     }
+
 
     //update total cost
     var totalCost = document.getElementById("totalCost");
@@ -72,20 +74,20 @@ function checkForm() {
     var shipCity = document.userInfo.shipCity;
     var shipState = document.userInfo.shipState;
     var shipZipCode = document.userInfo.shipZipCode;
-    var quantityField = document.userInfo.quantity;
+    //var quantityField = document.userInfo.quantity;
     var val=ccExpire.value.split("/");
 
     //check quantity cannot be 0 (Done)
-    if(!(parseInt(quantityField.value)>0))  {
-        alert("Quantity must be at least 1");
-        return(false);
-    }
-    else if(!quantityField.value.match(/^[0-9]+$/)) {
-        alert("Quantity must be numbers");
-        return(false);
-    }
+    //if(!(parseInt(quantityField.value)>0))  {
+    //alert("Quantity must be at least 1");
+    //    return(false);
+    //}
+    //else if(!quantityField.value.match(/^[0-9]+$/)) {
+    //    alert("Quantity must be numbers");
+    //    return(false);
+    //}
     //check first name (done)
-    else if(firstNameField.value=="") {
+    if(firstNameField.value=="") {
         alert("First name cannot be blank");
         return false;
     }
