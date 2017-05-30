@@ -62,7 +62,6 @@ public class OrderDetails extends HttpServlet {
 
         out.println("<div>");
         out.println("<table class=\"shoppingCartTable\">");
-        out.println("<p>ITEMS ORDERED: </p>");
 
         //dynamically add here
         HttpSession session = request.getSession();
