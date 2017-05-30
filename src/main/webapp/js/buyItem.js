@@ -31,6 +31,7 @@ function updateTotal() {
     // c += parseFloat(tax);
     //
     var total = document.getElementById("totalCost").value;
+
     // total = c;
 
     //delivery
@@ -46,6 +47,7 @@ function updateTotal() {
     else {
         total += 3;
     }
+
 
     //update total cost
     var totalCost = document.getElementById("totalCost");

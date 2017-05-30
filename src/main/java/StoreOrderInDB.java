@@ -16,11 +16,18 @@ import java.util.ListIterator;
  */
 @WebServlet(name = "StoreOrderInDB")
 public class StoreOrderInDB extends HttpServlet {
+    private ArrayList<Cart> itemList = new ArrayList<Cart>();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.println("<p>In StoreOrderDB</p>");
+
+        HttpSession session = request.getSession();
+        itemList = (ArrayList<Cart>) session.getAttribute("shoppingCart");
+        if(itemList == null) {
+            itemList = new ArrayList<Cart>();
+        }
 
         //connect to the DB information
         final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -87,10 +94,27 @@ public class StoreOrderInDB extends HttpServlet {
             out.println("<p> SHIP ZIP CODE: "+ shipZipCode +"</p>");
             out.println("<p> DELIVERY TYPE: "+ deliveryType +"</p>");
 
+            double totalAmount = 0;
+            //add items to orderDetail table in DB
+            if(itemList!=null || itemList.size() != 0) {
+                totalAmount = 0;
+                for (int i =0 ; i < itemList.size(); ++i) {
+                    Cart itemPick = itemList.get(i);
+                    final String itemName = itemPick.getName();
+                    final int itemQty = itemPick.getQty();
+                    final String itemSize = itemPick.getSize();
+                    final double total = itemList.get(i).getTotalCost();
+                    totalAmount += total;
+                    sql = "INSERT INTO OrderDetails (orderId, productId, itemSize, unitPrice, quantity, total) " +
+                            "VALUES(\""+(firstName+lastName)+"\",\""+itemName+"\",\""+itemSize+"\", 10,\""+itemQty+"\",\""+total+"\")";
+                    stmt.executeUpdate(sql);
+                }
+            }
+
             //stores customer information into database
             sql = "INSERT INTO Customer (firstName, lastName, emailAddress, phoneNumber, ccType, creditCardNumber,ccExpire, billAddress, billCity, billState, billZipCode, shipAddress, shipCity, shipState, shipZipCode, deliveryType, itemPurchase, total) " +
                     "VALUES(\""+firstName+"\",\""+lastName+"\",\""+emailAddress+"\",\""+phoneNumber+"\",\""+ccType+"\",\""+creditCardNumber+"\",\""+ccExpire+"\",\""+billAddress+"\",\""+billCity+"\",\""
-                    +billState+"\","+billZipCode+",\""+shipAddress+"\",\""+shipCity+"\",\""+shipState+"\","+shipZipCode+",\""+deliveryType+"\",\""+(firstName+lastName)+"\","+400+")";
+                    +billState+"\","+billZipCode+",\""+shipAddress+"\",\""+shipCity+"\",\""+shipState+"\","+shipZipCode+",\""+deliveryType+"\",\""+(firstName+lastName)+"\","+totalAmount+")";
             stmt.executeUpdate(sql);
 
             // Previously-viewed items, param is the servlet name
