@@ -1,3 +1,4 @@
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Calvin on 5/24/2017.
  */
-public class BuyItem extends HttpServlet {
+public class CheckOut extends HttpServlet {
     private ArrayList<Cart> itemList = new ArrayList<Cart>();
     private double totalPreTax = 0;
 
@@ -28,16 +29,16 @@ public class BuyItem extends HttpServlet {
         //header
         Constants.header(out);
 
-        //body]
-//        out.println("<body onload=\"getValues()\">");
+        //body
         out.println("<div class=\"form\">");
-        out.println("<form method=\"post\" action=\"index.php?page=insertCustomerInfo\" name=\"userInfo\" onsubmit=\"checkForm()\">");
+        out.println("<form method=\"post\" action=\"StoreOrderInDB\" name=\"userInfo\" onsubmit=\"checkForm()\">");
         out.println("<div class=\"itemSelected\">");
         out.println("<h1> Customer Information </h1>");
         out.println("<hr>");
         out.println("<h2> Order Summary </h2>");
         out.println("<table class=\"shoppingCartTable\">");
         if(itemList!=null || itemList.size() != 0) {
+            totalPreTax = 0;
             for (int i =0 ; i < itemList.size(); ++i) {
                 Cart itemPick = itemList.get(i);
                 final String itemName = itemPick.getName();
@@ -54,6 +55,7 @@ public class BuyItem extends HttpServlet {
                 out.println("</tr>");
             }
         }
+
         out.println("</table>");
         out.println("</div>");
         out.println("<table class=\"buyItemTableContainer\">");
@@ -105,7 +107,7 @@ public class BuyItem extends HttpServlet {
         out.println("<tr>");
         out.println("<td>City: </td>");
         out.println("<td>");
-        out.println("<input type=\"text\" name=\"billCity\" id=\"billCity\" class=\"city\" onkeyup=\"getState(this.id)\">");
+        out.println("<input type=\"text\" name=\"billCity\" id=\"billCity\" class=\"city\">");
         out.println("</td>");
         out.println("</tr>");
         out.println("<tr>");
@@ -114,7 +116,7 @@ public class BuyItem extends HttpServlet {
         out.println("</tr>");
         out.println("<tr>");
         out.println("<td>Zip Code: </td>");
-        out.println("<td> <input type=\"text\" name=\"billZipCode\" onblur=\"getZip(this.value, billCity, billState)\"> </td>");
+        out.println("<td> <input type=\"text\" name=\"billZipCode\" > </td>");
         out.println("</tr>");
         out.println("</table>");
         out.println("<table class=\"buyItemTableContainer\">");
@@ -126,7 +128,7 @@ public class BuyItem extends HttpServlet {
         out.println("<tr>");
         out.println("<td>City: </td>");
         out.println("<td>");
-        out.println("<input type=\"text\" name=\"shipCity\" id=\"shipCity\" class=\"city\" onkeyup=\"getState(this.id)\">");
+        out.println("<input type=\"text\" name=\"shipCity\" id=\"shipCity\" class=\"city\">");
         out.println("</td>");
         out.println("</tr>");
         out.println("<tr>");
@@ -135,24 +137,14 @@ public class BuyItem extends HttpServlet {
         out.println("</tr>");
         out.println("<tr>");
         out.println("<td>Zip Code: </td>");
-        out.println("<td> <input type=\"text\" name=\"shipZipCode\" onblur=\"getZip(this.value, shipCity, shipState)\"> </td>");
+        out.println("<td> <input type=\"text\" name=\"shipZipCode\" > </td>");
         out.println("</tr>");
         out.println("<tr>");
-        out.println("<td>Delivery Option: </td>");
-        out.println("<td>");
-        out.println("<select id=\"deliveryType\" name=\"deliveryType\" onchange=\"updateTotal()\">");
-        out.println("<option value=\"Overnight\" selected=\"selected\">Overnight.....$10</option>");
-        out.println("<option value=\"2 Days\" >    2 Days.........$5</option>");
-        out.println("<option value=\"7-10Days\" > 7-10 Days......$3</option>");
-        out.println("</select>");
-        out.println("</td>");
         out.println("</tr>");
         out.println("</table>");
         out.println("<div class=\"costContainer\">");
         out.println("<h2 class=\"formSep\">Overview</h2>");
         out.println("<div class=\"centerOverview\">");
-//       out.println("<p>Tax rate: $ <input id=\"taxPicked\" name=\"tax\" value=\"0\" onkeyup=\"updateTotal()\" class=\"inputReadOnly\" readonly> </input></p>");
-//        out.println("<p>Total Tax: $<input id=\"taxTotal\" name= 'taxTotal' class=\"inputReadOnly\" value=\"0\" readonly> </input></p>");
         out.println("<p>Total: $ <input input id=\"totalCost\" name=\"total\" value=\"$"+moneyFormat.format(totalPreTax)+"\" class=\"inputReadOnly\" readonly> </input></p>");
         out.println("</div>");
         out.println("<div id=\"submitOrder\">");
@@ -162,11 +154,12 @@ public class BuyItem extends HttpServlet {
         out.println("</form>");
         out.println("</div>");
 
-
         //footer
         Constants.footer(out);
     }
+
 }
+
 
 
 
