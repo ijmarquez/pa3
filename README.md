@@ -6,6 +6,7 @@ Marquez, Irish
 Poon, Calvin
 
 URL
+http://andromeda-64.ics.uci.edu:5064/pa3/home
 
 1.	Homepage
     a.	ItemsList servlet - handles displaying of the products obtained from the database. Uses RequestDispatcher “include” feature at the bottom of the code.
