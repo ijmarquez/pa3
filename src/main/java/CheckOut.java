@@ -34,8 +34,8 @@ public class CheckOut extends HttpServlet {
         out.println("<form method=\"post\" action=\"StoreOrderInDB\" name=\"userInfo\" onsubmit=\"checkForm()\">");
         out.println("<div class=\"itemSelected\">");
         out.println("<h1> Customer Information </h1>");
-        out.println("<hr>");
-        out.println("<h2> Order Summary </h2>");
+//        out.println("<hr>");
+        out.println("<h2 class='formSep'> Order Summary </h2>");
         out.println("<table class=\"shoppingCartTable\">");
         if(itemList!=null || itemList.size() != 0) {
             totalPreTax = 0;
@@ -55,8 +55,10 @@ public class CheckOut extends HttpServlet {
                 out.println("</tr>");
             }
         }
-
         out.println("</table>");
+        out.println("<div class=\"centerOverview\">");
+        out.println("<p>Total: $ <input input id=\"totalCost\" name=\"total\" value=\""+moneyFormat.format(totalPreTax)+"\" class=\"inputReadOnly\" readonly> </input></p>");
+        out.println("</div>");
         out.println("</div>");
         out.println("<table class=\"buyItemTableContainer\">");
         out.println("<h2 class=\"formSep\">Personal Information</h2>");
@@ -143,10 +145,6 @@ public class CheckOut extends HttpServlet {
         out.println("</tr>");
         out.println("</table>");
         out.println("<div class=\"costContainer\">");
-        out.println("<h2 class=\"formSep\">Overview</h2>");
-        out.println("<div class=\"centerOverview\">");
-        out.println("<p>Total: $ <input input id=\"totalCost\" name=\"total\" value=\"$"+moneyFormat.format(totalPreTax)+"\" class=\"inputReadOnly\" readonly> </input></p>");
-        out.println("</div>");
         out.println("<div id=\"submitOrder\">");
         out.println("<input id=\"btn\" type=\"submit\" value=\"Submit Order\" onclick=\"return checkForm(); return false\">");
         out.println("</div>");

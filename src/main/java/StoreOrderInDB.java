@@ -21,7 +21,6 @@ public class StoreOrderInDB extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<p>In StoreOrderDB</p>");
 
         HttpSession session = request.getSession();
         itemList = (ArrayList<Cart>) session.getAttribute("shoppingCart");

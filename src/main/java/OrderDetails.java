@@ -44,7 +44,6 @@ public class OrderDetails extends HttpServlet {
         String deliveryType = request.getParameter("deliveryType");
 
         PrintWriter out = response.getWriter();
-        out.println("<p>In OrderDetails</p>");
 
         //header
         Constants.header(out);
