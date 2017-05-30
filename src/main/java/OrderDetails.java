@@ -1,6 +1,8 @@
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -17,6 +19,26 @@ public class OrderDetails extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
+        // get customer data
+//        int    orderId = Integer.parseInt(request.getParameter("orderId"));
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String emailAddress = request.getParameter("emaillAddress");
+        String phoneNumber = request.getParameter("phoneNumber");
+
+        String ccType = request.getParameter("ccType");
+
+        String billAddress = request.getParameter("billAddress");
+        String billCity = request.getParameter("billCity");
+        String billState = request.getParameter("billState");
+        int    billZipCode = Integer.parseInt(request.getParameter("billZipCode"));
+
+        String shipAddress = request.getParameter("shipAddress");
+        String shipCity = request.getParameter("shipCity");
+        String shipState = request.getParameter("shipState");
+        int    shipZipCode = Integer.parseInt(request.getParameter("shipZipCode"));
+        String deliveryType = request.getParameter("deliveryType");
+
         PrintWriter out = response.getWriter();
         out.println("<p>In OrderDetails</p>");
 
@@ -51,6 +73,12 @@ public class OrderDetails extends HttpServlet {
         out.println("<table class=\"shoppingCartTable\">");
         out.println("<p>ITEMS ORDERED: </p>");
         //dynamically add here
+        HttpSession session = request.getSession();
+        itemList = (ArrayList<Cart>) session.getAttribute("shoppingCart");
+        if(itemList == null) {
+            itemList = new ArrayList<Cart>();
+        }
+
         if(itemList!=null || itemList.size() != 0) {
             totalCost = 0;
             for (int i =0 ; i < itemList.size(); ++i) {
@@ -79,28 +107,8 @@ public class OrderDetails extends HttpServlet {
         out.println("<p>Total: $ <input input id=\"totalCost\" name=\"total\" value=\""+moneyFormat.format(totalCost)+"\" class=\"inputReadOnly\" readonly> </input></p>");
         out.println("</div>");
 
-        // get customer data
-        int    orderId = Integer.parseInt(request.getParameter("orderId"));
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String emailAddress = request.getParameter("emaillAddress");
-        String phoneNumber = request.getParameter("phoneNumber");
-
-        String ccType = request.getParameter("ccType");
-
-        String billAddress = request.getParameter("billAddress");
-        String billCity = request.getParameter("billCity");
-        String billState = request.getParameter("billState");
-        int    billZipCode = Integer.parseInt(request.getParameter("billZipCode"));
-
-        String shipAddress = request.getParameter("shipAddress");
-        String shipCity = request.getParameter("shipCity");
-        String shipState = request.getParameter("shipState");
-        int    shipZipCode = Integer.parseInt(request.getParameter("shipZipCode"));
-        String deliveryType = request.getParameter("deliveryType");
-
-
-        out.println("<p>OrderId: " + orderId + "</p>");
+        out.println("<div>");
+//        out.println("<p>OrderId: " + orderId + "</p>");
         out.println("<p>SHIPPING ADDRESS: </p>");
         out.println("<p>" + firstName + lastName + "</p>");
         out.println("<p>" + shipAddress + "</p>");
@@ -116,16 +124,10 @@ public class OrderDetails extends HttpServlet {
         out.println("<p>" + firstName + lastName + "</p>");
         out.println("<p>" + billAddress + "</p>");
         out.println("<p>" + billCity + ", " + billState + " " + billZipCode + "</p><br><br>");
-
-
-
-
-
-
-
-
-
-
+        out.println("</div>");
+        out.println("<div id=\"submitOrder\">");
+        out.println("<input id=\"btn\" type=\"submit\" value=\"Finish\" onclick=\"location.href='home'\">");
+        out.println("</div>");
         //get data from server
 
 //        <?php
@@ -227,6 +229,10 @@ public class OrderDetails extends HttpServlet {
 
         //footer
         Constants.footer(out);
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        doGet(request, response);
     }
 }
 

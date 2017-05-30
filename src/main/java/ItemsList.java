@@ -81,6 +81,8 @@ public class ItemsList extends HttpServlet {
                 out.println("</td>");
                 i++;
             }
+            stmt.close();
+            conn.close();
         }
         catch (ClassNotFoundException e)
         {
@@ -92,26 +94,7 @@ public class ItemsList extends HttpServlet {
             out.println(se);
             se.printStackTrace();
         }
-        finally
-        {
-            try
-            {
-                if (stmt != null)
-                    stmt.close();
-            }
-            catch (SQLException se2)
-            {
-                try
-                {
-                    if (conn != null)
-                        conn.close();
-                }
-                catch (SQLException se)
-                {
-                    se.printStackTrace();
-                }
-            }
-        }
+
         out.println("</table>");
         out.println("</div>");
 

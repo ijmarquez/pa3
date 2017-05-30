@@ -44,6 +44,7 @@ public class CheckOut extends HttpServlet {
         out.println("<h2> Order Summary </h2>");
         out.println("<table class=\"shoppingCartTable\">");
         if(itemList!=null || itemList.size() != 0) {
+            totalPreTax = 0;
             for (int i =0 ; i < itemList.size(); ++i) {
                 Cart itemPick = itemList.get(i);
                 final String itemName = itemPick.getName();
