@@ -46,7 +46,7 @@ public class StoreOrderInDB extends HttpServlet {
             stmt = conn.createStatement();
             out.println("<p>May</p>");
             // get customer data
-            int    customerId = 0;  // 0 so compiler doesn't complain about initializing
+            int    customerId = 0;  // 0 so compiler doesn't complain About initializing
 
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");

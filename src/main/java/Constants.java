@@ -49,8 +49,8 @@ public class Constants {
     public static void footer(PrintWriter out) {
         out.println("<footer>");
         out.println("<div class=\"footer\">");
-        out.println("<a class=\"footerOption\" href=\"about.php\">about us</a>");
-        out.println("<a class=\"footerOption\" href=\"contact.php\">contact us</a>");
+        out.println("<a class=\"footerOption\" href=\"About\">About us</a>");
+        out.println("<a class=\"footerOption\" href=\"Contact\">Contact us</a>");
         out.println("</div>");
         out.println("</footer>");
         out.println("</div>");

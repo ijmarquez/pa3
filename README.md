@@ -12,7 +12,7 @@ http://andromeda-64.ics.uci.edu:5064/pa3/home
     a.	ItemsList servlet - handles displaying of the products obtained from the database. Uses RequestDispatcher “include” feature at the bottom of the code.
     b.	PreviousItemsViewed servlet - uses session tracking to display products visited. It displays up to 5 items recently viewed by the user. Clicking on any item takes the user to Item page.
 2.	Product Details
-    a.	Item servlet – displays the item. Uses request.getParameter() command to get details about the item and queries the database to be able to display the item. Uses session to add item into the shopping cart. Choosing a size and color and clicking “Add to cart” button adds the item onto the shopping cart and then takes user to the Shopping cart page.
+    a.	Item servlet – displays the item. Uses request.getParameter() command to get details About the item and queries the database to be able to display the item. Uses session to add item into the shopping cart. Choosing a size and color and clicking “Add to cart” button adds the item onto the shopping cart and then takes user to the Shopping cart page.
     b.	ShoppingCart servlet – displays the item name, item size, item quantity, cost of each item, and total. Clicking Checkout button takes the user to the CheckOut (Customer Information) page.
 3.	Check Out - handled by the CheckOut servlet. 
     a.	CheckOut servlet contains:
