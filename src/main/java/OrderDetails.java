@@ -3,21 +3,128 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Calvin on 5/24/2017.
  */
-public class OrderComplete extends HttpServlet {
+public class OrderDetails extends HttpServlet {
+
+    private ArrayList<Cart> itemList = new ArrayList<Cart>();
+    private double totalCost = 0;
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         PrintWriter out = response.getWriter();
+        out.println("<p>In OrderDetails</p>");
+
         //header
         Constants.header(out);
 
         //body
+        out.println("<p>Inside OrderDetails</p>");
+
         out.println("<div class=\"confirmContainer\">");
         out.println("<h2> Order Complete </h2>");
         out.println("<h3> Order Summary</h3>");
+
+
+        int qty = 0;
+        String item = "", size = "";
+        NumberFormat moneyFormat = new DecimalFormat("#0.00");
+
+        if(request.getParameter("quantity") != null) {
+            qty = Integer.parseInt(request.getParameter("quantity"));
+            item = request.getParameter("item");
+            size = request.getParameter("size");
+        }
+
+        /* dateplaced, ordernumber, ordertotal,
+        items ordered: quantity, productname
+        shipping address: fname, lname, street, city, state, zip, country, shipping method
+        payment method, billing address, total
+        */
+
+        out.println("<div>");
+        out.println("<table class=\"shoppingCartTable\">");
+        out.println("<p>ITEMS ORDERED: </p>");
+        //dynamically add here
+        if(itemList!=null || itemList.size() != 0) {
+            totalCost = 0;
+            for (int i =0 ; i < itemList.size(); ++i) {
+                Cart itemPick = itemList.get(i);
+                final String itemName = itemPick.getName();
+                final int itemQty = itemPick.getQty();
+                final String itemSize = itemPick.getSize();
+                final int total = (itemQty * 10);
+                itemList.get(i).setTotalCost(total);
+                totalCost += total;
+                out.println("<tr>");
+                out.println("<td><p> "+(i+1)+". "+itemName+"</p></td>");
+                out.println("</tr>");
+                out.println("<td><p>Size: "+itemSize+"</p> </td>");
+                out.println(" <td><p>Quantity: <input type=\"text\" name=\"quantity\" size=\"3\" value=\""+itemQty+"\" class=\"inputReadOnly\" readonly> </p></td>");
+                out.println("<td><p>Total Cost: $<input name=\"unitPrice\" value=\""+moneyFormat.format(total)+"\" class=\"inputReadOnly\" readonly> </input></p></td>");
+                out.println("</tr>");
+            }
+        }
+
+        //end of each item
+        out.println("</table>");
+        out.println("</div>");
+        out.println("<br><hr>");
+        out.println("<div class=\"centerOverview\">");
+        out.println("<p>Total: $ <input input id=\"totalCost\" name=\"total\" value=\""+moneyFormat.format(totalCost)+"\" class=\"inputReadOnly\" readonly> </input></p>");
+        out.println("</div>");
+
+        // get customer data
+        int    orderId = Integer.parseInt(request.getParameter("orderId"));
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String emailAddress = request.getParameter("emaillAddress");
+        String phoneNumber = request.getParameter("phoneNumber");
+
+        String ccType = request.getParameter("ccType");
+
+        String billAddress = request.getParameter("billAddress");
+        String billCity = request.getParameter("billCity");
+        String billState = request.getParameter("billState");
+        int    billZipCode = Integer.parseInt(request.getParameter("billZipCode"));
+
+        String shipAddress = request.getParameter("shipAddress");
+        String shipCity = request.getParameter("shipCity");
+        String shipState = request.getParameter("shipState");
+        int    shipZipCode = Integer.parseInt(request.getParameter("shipZipCode"));
+        String deliveryType = request.getParameter("deliveryType");
+
+
+        out.println("<p>OrderId: " + orderId + "</p>");
+        out.println("<p>SHIPPING ADDRESS: </p>");
+        out.println("<p>" + firstName + lastName + "</p>");
+        out.println("<p>" + shipAddress + "</p>");
+        out.println("<p>" + shipCity + ", " + shipState + " " + shipZipCode + "</p><br><br>");
+
+        out.println("<p>SHIPPING METHOD: </p>");
+        out.println("<p>" + deliveryType + "</p><br><br>");
+
+        out.println("<p>PAYMENT METHOD: </p>");
+        out.println("<p>" + ccType + "</p><br><br>");
+
+        out.println("<p>BILLING ADDRESS: </p>");
+        out.println("<p>" + firstName + lastName + "</p>");
+        out.println("<p>" + billAddress + "</p>");
+        out.println("<p>" + billCity + ", " + billState + " " + billZipCode + "</p><br><br>");
+
+
+
+
+
+
+
+
+
 
         //get data from server
 
@@ -113,10 +220,10 @@ public class OrderComplete extends HttpServlet {
 //        echo('Delivery Option: '.$deliveryType.'</p>');
 //        ?>
 
-        out.println("</div>");
-        out.println("<div id=\"orderCompleteContainer\">");
-        out.println("<input id=\"btn\" type=\"submit\" value=\"Finish\" onclick=\"location.href='itemsList'\">");
-        out.println("</div>");
+//        out.println("</div>");
+//        out.println("<div id=\"orderCompleteContainer\">");
+//        out.println("<input id=\"btn\" type=\"submit\" value=\"Finish\" onclick=\"location.href='itemsList'\">");
+//        out.println("</div>");
 
         //footer
         Constants.footer(out);

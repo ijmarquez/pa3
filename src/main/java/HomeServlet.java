@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class HomeServlet extends HttpServlet {
 
-    HttpSession session;
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         // create a viewedList and add to session
