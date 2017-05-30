@@ -32,7 +32,11 @@ public class CheckOut extends HttpServlet {
 //        out.println("<body onload=\"getValues()\">");
         out.println("<div class=\"form\">");
         //out.println("<form method=\"post\" action=\"index.php?page=insertCustomerInfo\" name=\"userInfo\" onsubmit=\"checkForm()\">");
-        out.println("<form method=\"post\" action=\"StoreOrderInDB\" name=\"userInfo\" onsubmit=\"checkForm()\">");
+        //out.println("<a href=\"Item?product='"+generalName+"'&amp;image='"+imageLocation+"'\">");
+
+        //out.println("<form method=\"post\" action=\"StoreOrderInDB\" name=\"userInfo\" onsubmit=\"checkForm()\">");
+        out.println("<form method=\"post\" action=\"Test\" name=\"testOnly\">");
+
         out.println("<div class=\"itemSelected\">");
         out.println("<h1> Customer Information </h1>");
         out.println("<hr>");

@@ -37,7 +37,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-name>StoreOrderInDB</servlet-name>
     <servlet-class>StoreOrderInDB</servlet-class>
   </servlet>
-
+  <servlet>
+    <servlet-name>Test</servlet-name>
+    <servlet-class>Test</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Test2</servlet-name>
+    <servlet-class>Test2</servlet-class>
+  </servlet>
 
 
   //Servlet Mapping
@@ -72,6 +79,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <servlet-mapping>
     <servlet-name>StoreOrderInDB</servlet-name>
     <url-pattern>/StoreOrderInDB</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Test</servlet-name>
+    <url-pattern>/Test</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Test2</servlet-name>
+    <url-pattern>/Test2</url-pattern>
   </servlet-mapping>
 
 </web-app>
