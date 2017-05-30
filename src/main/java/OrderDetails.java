@@ -90,6 +90,8 @@ public class OrderDetails extends HttpServlet {
             }
         }
 
+        itemList = new ArrayList<Cart>();
+        session.setAttribute("shoppingCart", itemList);
         //end of each item
         out.println("</table>");
         out.println("</div>");
