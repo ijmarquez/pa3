@@ -28,7 +28,7 @@ public class HomeServlet extends HttpServlet {
         //body]
         out.println(" <div class=\"home-contents\">");
         out.println("<p id=\"home-hook\">Style. Comfort. Easy.</p>");
-        out.println("<a id=\"userHomeItemList\" href=\"itemsList\">Enter</a>");
+        out.println("<a id=\"userHomeItemList\" href=\"itemsList.jsp\">Enter</a>");
         out.println("</div>");
 
         //footer
